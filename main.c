@@ -102,6 +102,7 @@ bool crear_ebr(lista_ebr ebr,mbr mbr_s, int size, char *name);
 void montar(char *path, char *name);
 void desmontar(char *name);
 void creacion();
+void crear_reporte_mbr(char *path, char *id);
 
 //PRINCIPAL
 int main()
@@ -762,10 +763,10 @@ lista_ebr llenar_ebr(lista_ebr lista,char* name,int size, int inicioParticion ){
 
 
 }
-/*
+
 void crear_reporte(char *path, char *name, char *id){
-    if(strcmp(name,'mbr')==0){
-        crear_reporte_mbr(path);
+    if(strcmp(name,"mbr")==0){
+        crear_reporte_mbr(path,id);
     }
 
 }
@@ -788,52 +789,51 @@ void crear_reporte_mbr(char *path, char *id){
             fprintf(repo,"a [label=<<table border=\"0\" cellborder=\"1\" cellspacing=\"0\">");
             fprintf(repo, "<tr><td><b>MBR</b></td></tr>");
             fprintf(repo, "<tr><td>NOMBRE</td><td>VALOR</td></tr>");
-            fprintf(repo, "<tr><td>Tamaño</td><td>%d</td></tr>",mbr.mbr_tamanio);
-            fprintf(repo, "<tr><td>Fecha de creacion</td><td>%s</td></tr>",mbr.mbr_fecha_creacion);
-            fprintf(repo, "<tr><td>Disk Signature</td><td>%s</td></tr>",mbr.mbr_disk_signature);
-            if(mbr.mbr_partition_1.part_status=='1'){
-                fprintf(repo, "<tr><td>part_status_1</td><td>%c</td></tr>",mbr.mbr_partition_1.part_status);
-                fprintf(repo, "<tr><td>part_type_1</td><td>%c</td></tr>",mbr.mbr_partition_1.part_type);
-                fprintf(repo, "<tr><td>part_fit_1</td><td>%c</td></tr>",mbr.mbr_partition_1.part_fit);
-                fprintf(repo, "<tr><td>part_start_1</td><td>%i</td></tr>",mbr.mbr_partition_1.part_start);
-                fprintf(repo, "<tr><td>part_size_1</td><td>%i</td></tr>",mbr.mbr_partition_1.part_size);
-                fprintf(repo, "<tr><td>part_name_1</td><td>%s</td></tr>",mbr.mbr_partition_1.part_name);
+            fprintf(repo, "<tr><td>Tamaño</td><td>%d</td></tr>",mbr_s.mbr_tamanio);
+            fprintf(repo, "<tr><td>Fecha de creacion</td><td>%s</td></tr>",mbr_s.mbr_fecha_creacion);
+            fprintf(repo, "<tr><td>Disk Signature</td><td>%d</td></tr>",mbr_s.mbr_disk_signature);
+            if(mbr_s.mbr_partition_1.part_status=='1'){
+                fprintf(repo, "<tr><td>part_status_1</td><td>%c</td></tr>",mbr_s.mbr_partition_1.part_status);
+                fprintf(repo, "<tr><td>part_type_1</td><td>%c</td></tr>",mbr_s.mbr_partition_1.part_type);
+                fprintf(repo, "<tr><td>part_fit_1</td><td>%c</td></tr>",mbr_s.mbr_partition_1.part_fit);
+                fprintf(repo, "<tr><td>part_start_1</td><td>%i</td></tr>",mbr_s.mbr_partition_1.part_start);
+                fprintf(repo, "<tr><td>part_size_1</td><td>%i</td></tr>",mbr_s.mbr_partition_1.part_size);
+                fprintf(repo, "<tr><td>part_name_1</td><td>%s</td></tr>",mbr_s.mbr_partition_1.part_name);
             }
-             if(mbr.mbr_partition_2.part_status=='1'){
-                fprintf(repo, "<tr><td>part_status_1</td><td>%c</td></tr>",mbr.mbr_partition_2.part_status);
-                fprintf(repo, "<tr><td>part_type_2</td><td>%c</td></tr>",mbr.mbr_partition_2.part_type);
-                fprintf(repo, "<tr><td>part_fit_2</td><td>%c</td></tr>",mbr.mbr_partition_2.part_fit);
-                fprintf(repo, "<tr><td>part_start_2</td><td>%i</td></tr>",mbr.mbr_partition_2.part_start);
-                fprintf(repo, "<tr><td>part_size_2</td><td>%i</td></tr>",mbr.mbr_partition_2.part_size);
-                fprintf(repo, "<tr><td>part_name_2</td><td>%s</td></tr>",mbr.mbr_partition_2.part_name);
+             if(mbr_s.mbr_partition_2.part_status=='1'){
+                fprintf(repo, "<tr><td>part_status_1</td><td>%c</td></tr>",mbr_s.mbr_partition_2.part_status);
+                fprintf(repo, "<tr><td>part_type_2</td><td>%c</td></tr>",mbr_s.mbr_partition_2.part_type);
+                fprintf(repo, "<tr><td>part_fit_2</td><td>%c</td></tr>",mbr_s.mbr_partition_2.part_fit);
+                fprintf(repo, "<tr><td>part_start_2</td><td>%i</td></tr>",mbr_s.mbr_partition_2.part_start);
+                fprintf(repo, "<tr><td>part_size_2</td><td>%i</td></tr>",mbr_s.mbr_partition_2.part_size);
+                fprintf(repo, "<tr><td>part_name_2</td><td>%s</td></tr>",mbr_s.mbr_partition_2.part_name);
             }
-             if(mbr.mbr_partition_3.part_status=='1'){
-                fprintf(repo, "<tr><td>part_status_3</td><td>%c</td></tr>",mbr.mbr_partition_3.part_status);
-                fprintf(repo, "<tr><td>part_type_3</td><td>%c</td></tr>",mbr.mbr_partition_3.part_type);
-                fprintf(repo, "<tr><td>part_fit_3</td><td>%c</td></tr>",mbr.mbr_partition_3.part_fit);
-                fprintf(repo, "<tr><td>part_start_3</td><td>%i</td></tr>",mbr.mbr_partition_3.part_start);
-                fprintf(repo, "<tr><td>part_size_3</td><td>%i</td></tr>",mbr.mbr_partition_3.part_size);
-                fprintf(repo, "<tr><td>part_name_3</td><td>%s</td></tr>",mbr.mbr_partition_3.part_name);
+             if(mbr_s.mbr_partition_3.part_status=='1'){
+                fprintf(repo, "<tr><td>part_status_3</td><td>%c</td></tr>",mbr_s.mbr_partition_3.part_status);
+                fprintf(repo, "<tr><td>part_type_3</td><td>%c</td></tr>",mbr_s.mbr_partition_3.part_type);
+                fprintf(repo, "<tr><td>part_fit_3</td><td>%c</td></tr>",mbr_s.mbr_partition_3.part_fit);
+                fprintf(repo, "<tr><td>part_start_3</td><td>%i</td></tr>",mbr_s.mbr_partition_3.part_start);
+                fprintf(repo, "<tr><td>part_size_3</td><td>%i</td></tr>",mbr_s.mbr_partition_3.part_size);
+                fprintf(repo, "<tr><td>part_name_3</td><td>%s</td></tr>",mbr_s.mbr_partition_3.part_name);
             }
-             if(mbr.mbr_partition_4.part_status=='1'){
-                fprintf(repo, "<tr><td>part_status_4</td><td>%c</td></tr>",mbr.mbr_partition_4.part_status);
-                fprintf(repo, "<tr><td>part_type_4</td><td>%c</td></tr>",mbr.mbr_partition_4.part_type);
-                fprintf(repo, "<tr><td>part_fit_4</td><td>%c</td></tr>",mbr.mbr_partition_4.part_fit);
-                fprintf(repo, "<tr><td>part_start_4</td><td>%i</td></tr>",mbr.mbr_partition_4.part_start);
-                fprintf(repo, "<tr><td>part_size_4</td><td>%i</td></tr>",mbr.mbr_partition_4.part_size);
-                fprintf(repo, "<tr><td>part_name_4</td><td>%s</td></tr>",mbr.mbr_partition_4.part_name);
+             if(mbr_s.mbr_partition_4.part_status=='1'){
+                fprintf(repo, "<tr><td>part_status_4</td><td>%c</td></tr>",mbr_s.mbr_partition_4.part_status);
+                fprintf(repo, "<tr><td>part_type_4</td><td>%c</td></tr>",mbr_s.mbr_partition_4.part_type);
+                fprintf(repo, "<tr><td>part_fit_4</td><td>%c</td></tr>",mbr_s.mbr_partition_4.part_fit);
+                fprintf(repo, "<tr><td>part_start_4</td><td>%i</td></tr>",mbr_s.mbr_partition_4.part_start);
+                fprintf(repo, "<tr><td>part_size_4</td><td>%i</td></tr>",mbr_s.mbr_partition_4.part_size);
+                fprintf(repo, "<tr><td>part_name_4</td><td>%s</td></tr>",mbr_s.mbr_partition_4.part_name);
             }
             fprintf(repo,"}");
             fclose(repo);
-            system("dot -Tpng %s -o ReporteFat.png",id);
-
-            system("nohup display %s &",id);
+            //system("dot -Tpng %s -o ReporteFat.png",&id);
+            //system("nohup display %s &",&id);
          }
          fclose(disco);
     }
 
 
-}*/
+}
 
 
 bool eliminar_particion(mbr mbr_s, char *name){
@@ -958,27 +958,29 @@ void desmontar(char *name){
 void llenarParametros(char* lineaComando){
     char *sub_com1 = strtok(lineaComando, " ");
     while (sub_com1 != NULL) {
+        printf("sub_com: %s\n",sub_com1);
         if (strcmp(sub_com1,"-size")==0){
             sub_com1 = strtok(NULL, " ");
+            printf("sub_com: %s\n",sub_com1);
             strcpy(size, sub_com1);
         }
-        else if (strcmp(sub_com1,"-unit")==0){
+        else if (strcmp(sub_com1,"+unit::")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(unit, sub_com1);
         }
-        else if (strcmp(sub_com1,"-path")==0){
+        else if (strcmp(sub_com1,"-path::")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(path, sub_com1);
         }
-        else if (strcmp(sub_com1,"-fit")==0){
+        else if (strcmp(sub_com1,"-fit::")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(fit_v, sub_com1);
         }
-        else if (strcmp(sub_com1,"-type")==0){
+        else if (strcmp(sub_com1,"-type::")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(type_v, sub_com1);
         }
-        else if (strcmp(sub_com1,"-delete")==0){
+        else if (strcmp(sub_com1,"-delete::")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(delete, sub_com1);
         }
@@ -989,14 +991,14 @@ void llenarParametros(char* lineaComando){
         else if (strcmp(sub_com1,"-add")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(add, sub_com1);
-        } else if (strcmp(sub_com1,"//")==0){
-
+        } else if (strcmp(sub_com1,"#")==0){
+            sub_com1 = strtok(NULL, " ");
         }
         else if (strcmp(sub_com1,"-id")==0){
             sub_com1 = strtok(NULL, " ");
             strcpy(add, sub_com1);
         }
-            sub_com1= strtok(NULL, ":");
+            sub_com1= strtok(NULL, "::");
         }
 };
 
